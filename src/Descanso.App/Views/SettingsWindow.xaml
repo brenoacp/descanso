@@ -1,0 +1,307 @@
+<Window x:Class="Descanso.App.Views.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Descanso — Configurações"
+        Width="600" Height="780" MinWidth="540" MinHeight="520"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource CanvasBrush}"
+        FontFamily="{StaticResource AppFont}"
+        Foreground="{StaticResource TextPrimaryBrush}"
+        Icon="pack://application:,,,/Assets/descanso.ico"
+        UseLayoutRounding="True"
+        SnapsToDevicePixels="True">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Cabeçalho -->
+        <StackPanel Grid.Row="0" Margin="24,20,24,14">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="pack://application:,,,/Assets/descanso.ico"
+                       Width="36" Height="36"
+                       VerticalAlignment="Center" />
+                <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
+                    <TextBlock Text="Descanso"
+                               FontSize="19"
+                               FontWeight="SemiBold"
+                               TextOptions.TextFormattingMode="Display" />
+                    <TextBlock Text="Lembretes para levantar da cadeira"
+                               FontSize="12.5"
+                               Foreground="{StaticResource TextMutedBrush}"
+                               Margin="0,2,0,0"
+                               TextOptions.TextFormattingMode="Display" />
+                </StackPanel>
+            </StackPanel>
+
+            <Border x:Name="WarningBar"
+                    Visibility="Collapsed"
+                    Margin="0,14,0,0"
+                    Background="{StaticResource WarningBgBrush}"
+                    BorderBrush="{StaticResource WarningBorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Padding="12,10">
+                <TextBlock Style="{StaticResource Hint}"
+                           Foreground="#7A5B1E"
+                           Text="As notificações deste aplicativo estão desativadas no Windows. Abra Configurações → Sistema → Notificações e ative o Descanso." />
+            </Border>
+        </StackPanel>
+
+        <!-- Conteúdo -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="24,0,24,8">
+            <StackPanel>
+
+                <Border Style="{StaticResource Card}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource SectionTitle}" Text="RITMO" />
+
+                        <Grid Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource Label}" Text="Intervalo entre pausas" />
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <TextBox x:Name="IntervalBox" Style="{StaticResource NumberBox}" />
+                                <TextBlock Style="{StaticResource Unit}" Text="min" />
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource Label}" Text="Duração da pausa" />
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <TextBox x:Name="BreakBox" Style="{StaticResource NumberBox}" />
+                                <TextBlock Style="{StaticResource Unit}" Text="min" />
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource Card}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource SectionTitle}" Text="PAUSA LONGA" />
+
+                        <Grid Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <CheckBox x:Name="LongBreakCheck"
+                                      Style="{StaticResource AppCheckBox}"
+                                      Content="Ativar pausa longa"
+                                      Checked="OnLongBreakToggled"
+                                      Unchecked="OnLongBreakToggled" />
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <TextBlock Style="{StaticResource Unit}" Text="a cada" Margin="0,0,8,0" />
+                                <TextBox x:Name="LongBreakEveryBox" Style="{StaticResource NumberBox}" />
+                                <TextBlock Style="{StaticResource Unit}" Text="pausas" />
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource Label}" Text="Duração da pausa longa" />
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <TextBox x:Name="LongBreakMinutesBox" Style="{StaticResource NumberBox}" />
+                                <TextBlock Style="{StaticResource Unit}" Text="min" />
+                            </StackPanel>
+                        </Grid>
+
+                        <TextBlock Style="{StaticResource Hint}"
+                                   Text="A cada N pausas o lembrete sugere uma pausa maior." />
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource Card}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource SectionTitle}" Text="AUSÊNCIA" />
+
+                        <Grid Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource Label}" Text="Considerar ausente após" />
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <TextBox x:Name="IdleThresholdBox" Style="{StaticResource NumberBox}" />
+                                <TextBlock Style="{StaticResource Unit}" Text="min" />
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource Label}" Text="Considerar descanso após" />
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <TextBox x:Name="IdleResetBox" Style="{StaticResource NumberBox}" />
+                                <TextBlock Style="{StaticResource Unit}" Text="min" />
+                            </StackPanel>
+                        </Grid>
+
+                        <TextBlock Style="{StaticResource Hint}"
+                                   Text="Sem teclado ou mouse, o cronômetro para. Uma ausência longa conta como descanso e reinicia o ciclo." />
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource Card}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource SectionTitle}" Text="HORÁRIO" />
+
+                        <CheckBox x:Name="HoursCheck"
+                                  Style="{StaticResource AppCheckBox}"
+                                  Content="Lembrar apenas no horário de trabalho"
+                                  Margin="0,0,0,12"
+                                  Checked="OnHoursToggled"
+                                  Unchecked="OnHoursToggled" />
+
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource Label}" Text="Das" />
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <TextBox x:Name="StartBox" Style="{StaticResource TimeBox}" />
+                                <TextBlock Style="{StaticResource Unit}" Text="às" />
+                                <TextBox x:Name="EndBox" Style="{StaticResource TimeBox}" Margin="8,0,0,0" />
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource Label}" Text="Dias" Margin="0,0,20,0" />
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <ToggleButton x:Name="Day1" Style="{StaticResource DayToggle}" Content="Seg" Tag="1" />
+                                <ToggleButton x:Name="Day2" Style="{StaticResource DayToggle}" Content="Ter" Tag="2" />
+                                <ToggleButton x:Name="Day3" Style="{StaticResource DayToggle}" Content="Qua" Tag="3" />
+                                <ToggleButton x:Name="Day4" Style="{StaticResource DayToggle}" Content="Qui" Tag="4" />
+                                <ToggleButton x:Name="Day5" Style="{StaticResource DayToggle}" Content="Sex" Tag="5" />
+                                <ToggleButton x:Name="Day6" Style="{StaticResource DayToggle}" Content="Sáb" Tag="6" />
+                                <ToggleButton x:Name="Day7" Style="{StaticResource DayToggle}" Content="Dom" Tag="7" Margin="0" />
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource Card}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource SectionTitle}" Text="NOTIFICAÇÃO" />
+
+                        <CheckBox x:Name="SoundCheck"
+                                  Style="{StaticResource AppCheckBox}"
+                                  Content="Tocar som na notificação"
+                                  Margin="0,0,0,10" />
+
+                        <Grid Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource Label}" Text="Adiar por" />
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <TextBox x:Name="SnoozeMinutesBox" Style="{StaticResource NumberBox}" />
+                                <TextBlock Style="{StaticResource Unit}" Text="min" />
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource Label}" Text="Adiamentos por pausa" />
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <TextBox x:Name="SnoozeMaxBox" Style="{StaticResource NumberBox}" />
+                                <TextBlock Style="{StaticResource Unit}" Text="vezes" />
+                            </StackPanel>
+                        </Grid>
+
+                        <TextBlock Style="{StaticResource Hint}"
+                                   Text="Se a notificação não aparecer, verifique o Assistente de Foco e as permissões do app nas Configurações do Windows." />
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource Card}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource SectionTitle}" Text="INICIALIZAÇÃO" />
+
+                        <CheckBox x:Name="StartupCheck"
+                                  Style="{StaticResource AppCheckBox}"
+                                  Content="Iniciar com o Windows"
+                                  Margin="0,0,0,12" />
+
+                        <StackPanel Orientation="Horizontal">
+                            <Button Style="{StaticResource SecondaryButton}"
+                                    Content="Re-registrar notificações"
+                                    Click="OnReRegister" />
+                            <TextBlock Style="{StaticResource Hint}"
+                                       Text="Use se você moveu o aplicativo de pasta."
+                                       Margin="12,0,0,0"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <TextBlock Style="{StaticResource Hint}"
+                           Margin="2,0,0,20"
+                           Text="Configuração em %APPDATA%\Descanso\settings.json — editar o arquivo com o app aberto recarrega na hora." />
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Rodapé -->
+        <Border Grid.Row="2"
+                Background="{StaticResource SurfaceBrush}"
+                BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0,1,0,0"
+                Padding="24,14">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Button Style="{StaticResource SecondaryButton}"
+                        Content="Testar notificação"
+                        Click="OnTest"
+                        VerticalAlignment="Center" />
+
+                <TextBlock x:Name="ValidationText"
+                           Grid.Column="1"
+                           Style="{StaticResource Hint}"
+                           Foreground="{StaticResource DangerBrush}"
+                           Margin="14,0"
+                           VerticalAlignment="Center"
+                           TextWrapping="NoWrap"
+                           TextTrimming="CharacterEllipsis" />
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button Style="{StaticResource SecondaryButton}"
+                            Content="Cancelar"
+                            IsCancel="True"
+                            Margin="0,0,10,0" />
+                    <Button Style="{StaticResource PrimaryButton}"
+                            Content="Salvar"
+                            IsDefault="True"
+                            Click="OnSave" />
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

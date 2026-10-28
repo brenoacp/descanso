@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>Descanso</AssemblyName>
+    <RootNamespace>Descanso.App</RootNamespace>
+    <ApplicationIcon>Assets\descanso.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
+    <Version>1.0.0</Version>
+    <Product>Descanso</Product>
+    <AssemblyTitle>Descanso</AssemblyTitle>
+    <Company>Descanso</Company>
+    <InvariantGlobalization>false</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2" />
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Descanso.Core\Descanso.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\descanso.ico" />
+    <Resource Include="Assets\descanso.ico" />
+  </ItemGroup>
+
+</Project>

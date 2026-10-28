@@ -1,0 +1,18 @@
+bin/
+obj/
+dist/
+publish/
+
+*.user
+*.suo
+.vs/
+.idea/
+TestResults/
+
+# Skills locais de agentes (não fazem parte do app)
+.agents/
+skills-lock.json
+
+# Sistema
+.DS_Store
+Thumbs.db
